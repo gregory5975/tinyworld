@@ -1,0 +1,45 @@
+<!DOCTYPE HTML><head><meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+<title>DevXdemo</title>
+
+<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+
+id="sap-ui-bootstrap" data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.table" data-sap-ui-theme="sap_bluecrystal">
+
+</script>
+<script src="./Util.js" > </script>
+<script>
+
+  var oModel = new sap.ui.model.odata.ODataModel("/euro.xsodata", true);
+  var oTable = new sap.m.Table({ 
+  		headerText : "European Countries",
+  	    visibleRowCount: 5, 
+  	    id: "tinytab",
+  		headerToolbar : new sap.m.Toolbar({
+  			content : new sap.m.Button({
+  				text : "Add Country",
+  				press : openFirstDialog,
+  			})
+  		})
+  });
+
+  oTable.addColumn(new sap.m.Column("col1",{header: new sap.m.Label({text:"Country Name"})}));
+  oTable.bindAggregation("items",{
+  		path:"/euro",
+  		template: new sap.m.ColumnListItem({
+              cells: [
+                      new sap.m.Label({ text: "{name}" })
+                      ]})
+  });
+
+//   oTable.bindRows("/euro"); 
+  oTable.setModel(oModel);
+  oTable.placeAt("content");
+
+</script>
+
+</head>
+
+  <body class='sapUiBody'> <div id='content'></div> </body>
+
+</html>
